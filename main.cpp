@@ -1,5 +1,5 @@
 // @author Jasper Haasdijk // s4449754
-// @author Tiko Huizinga // s
+// @author Tiko Huizinga // s4460898
 
 #include <iostream>
 
