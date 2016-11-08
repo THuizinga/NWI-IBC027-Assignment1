@@ -1,0 +1,28 @@
+// @author Jasper Haasdijk // s4449754
+// @author Tiko Huizinga // s
+
+#include <iostream>
+
+using namespace std;
+
+int main(){
+    
+    /// Input
+    /*
+        B denotes a black, light-weight leave
+        R denotes a red, heavy leave
+        (m1m2) denotes a rod with two sub mobiles m1 and m2
+        
+        Number of rods is bounded by 1500
+    */
+    
+    /// Output
+    /*
+        IF possible: A single integer
+            The minimal number of swaps needed to make the mobile balanced
+        ELSE: stdout
+            The string: "discard"
+    */
+    
+    return 0;
+}
