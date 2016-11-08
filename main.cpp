@@ -7,17 +7,33 @@
 using namespace std;
 
 // global variables
-struct node{
+struct node{    // node indicates there is a subtree further down
 
     node *parent;
     node *left;
     node *right;
 };
 
+struct leaf{    // leaf indicates it is the bottommost node
+
+    char color;
+};
+
 // helper-functions
 node input_handler(string input){
 
-    // TODO
+    /**
+    *   1. Read string
+    *   2. Remove first and last exclusive brackets
+    *   3. Read string
+    *   4.  IF char = (
+    *           DO read until () value is 0
+    *               consider this string left child, consider remaining string right child
+    *       IF char != (
+    *           DO read until ( || end of string
+    *               IF ( DO consider prior string left child AND repeat from 4.
+    *               IF end of string DO first char is left child second char is right child
+    */
 }
 
 
