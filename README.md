@@ -1,1 +1,3 @@
-# NWI-IBC027-Assignment1
+# NWI-IBC027
+## Algorithms and datastructures
+First practical assignment featuring Red-Black Mobiles!
