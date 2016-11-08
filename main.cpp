@@ -6,10 +6,32 @@
 
 using namespace std;
 
+// global variables
+struct node{
+
+    node *parent;
+    node *left;
+    node *right;
+};
+
+// helper-functions
+node input_handler(string input){
+
+    // TODO
+}
+
+
 int main(){
 
-    string input;
-    cin >> input;
+//    string input;
+//    cin >> input;
+
+    string input = "(BR)";
+
+//    for(size_t i = 0; i < input.size(); i++){
+//        cout << input[i];
+//    }
+//    cout << "END";
 
     return 0;
 }
