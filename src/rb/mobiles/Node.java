@@ -4,7 +4,7 @@ package rb.mobiles;
  *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
- * @author test5
+ * @author test7 - why is this such a chore .-.
  */
 
 public class Node {
