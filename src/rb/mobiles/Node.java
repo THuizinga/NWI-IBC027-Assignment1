@@ -13,8 +13,8 @@ public class Node{
     private String value;	    // 'R' if Red leaf. 'B' If right leaf
     private int weight;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
-    private int updateWeight;	// weight to be added to this tree
-    private boolean isLeafNode;
+    private int updateWeight;       // weight to be added to this tree
+    private boolean isLeafNode;     // shows whether the node is a leaf node
 
     public Node(String input){		
         if("R".equals(input) || "B".equals(input)){
