@@ -6,6 +6,12 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
+/**
+ * TODO
+ * 1. In the constructor initialise the Node variables (except updateWeight)
+ * 2. Add recursive solve() function
+ */
+
 public class Node{
 
     private Node left;		    // left node of this tree
@@ -46,7 +52,10 @@ public class Node{
     
 	
 	
-
+    /**
+     * Calculates the minimal amount of swaps necessary for balancing the tree.
+     * @return the amount of swaps, -1 if balancing is not possible
+     */
     public int solve(){
         // TODO
         return 0;
