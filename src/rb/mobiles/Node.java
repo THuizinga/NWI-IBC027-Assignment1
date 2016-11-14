@@ -8,12 +8,11 @@ package rb.mobiles;
 
 public class Node {
 
-	public Node left;
-	public Node right;
-	public String value;
-        public int weight;
-        public int leafNodes;
-        
+	private Node left;
+	private Node right;
+	private String value;
+        private int weight;
+        private int leafNodes;
         
 	
 	public Node(String input) {		
