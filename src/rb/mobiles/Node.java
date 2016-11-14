@@ -15,22 +15,20 @@ public class Node {
         private int leafNodes;
         
 	
-	public Node(String input) {		
-		if(input == "B" || input == "R")
-				value = input;
-		else{
-			int split = inputSplitter(input);
-			left = new Node(input.substring(1, split));
-			right = new Node(input.substring(split+1, input.length()-1));
-		}
-		
-		
+    public Node(String input) {		
+	if("B".equals(input) || "R".equals(input))
+	    value = input;
+	else{
+	    int split = inputSplitter(input);
+	    left = new Node(input.substring(1, split));
+	    right = new Node(input.substring(split+1, input.length()-1));
 	}
+    }
 
-	public int solve() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    public int solve() {
+
+	return 0;
+    }
 	
 	/**
 	 * Calculate the value where the input string should be splitted  
