@@ -1,7 +1,5 @@
 package rb.mobiles;
 
-import java.time.Clock;
-
 /**
  *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
