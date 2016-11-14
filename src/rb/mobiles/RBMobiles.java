@@ -14,6 +14,13 @@ public class RBMobiles{
     public static void main(String[] args){
         String input = "((BB)(RR))";
         Node n = new Node(input);
-        System.out.println(n.solve());
+        
+        int answer = n.solve();
+        if(answer < 0){
+            System.out.println("discard");
+        }
+        else{
+            System.out.println(answer);
+        }
     }
 }
