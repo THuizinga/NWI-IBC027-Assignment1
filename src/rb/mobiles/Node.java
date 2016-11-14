@@ -1,5 +1,7 @@
 package rb.mobiles;
 
+import java.time.Clock;
+
 /**
  *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
@@ -21,9 +23,13 @@ public class Node {
             value = input;
         else{
             int split = inputSplitter(input);
-            left = new Node(input.substring(0, split));
+            left = new Node(input.substring(1, split));
             right = new Node(input.substring(split+1, input.length()-1));
         }
+    }
+    
+    public Boolean isBalanced(){
+	return false;
     }
 
     public int solve(){
@@ -39,7 +45,7 @@ public class Node {
     private int inputSplitter(String s){
         int result = 0;
         int brackets = 0;
-
+	System.out.println(s);
         while(brackets > 0 || result == 0){
             char cur = s.charAt(result);
 
