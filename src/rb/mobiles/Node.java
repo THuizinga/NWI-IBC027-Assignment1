@@ -6,8 +6,6 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
-// Testing out what works with regard to this new branch
-
 public class Node {
 
 	public Node left;
