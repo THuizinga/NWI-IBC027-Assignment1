@@ -17,13 +17,19 @@ public class Node{
     private Node left;		    // left node of this tree
     private Node right;		    // right node of this tree 
     private String value;	    // 'R' if Red leaf. 'B' If right leaf
-    private int weight;		    // total weight of this tree
+    private int weight = -1;	// total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
 
     public Node(String input){		
         if("R".equals(input) || "B".equals(input)){
+			if("R".equals(input)){
+				weight = 1;
+			}
+			else{
+				weight = 0;
+			}
             value = input;      // we have reached a leaf node of the tree
             isLeafNode = true;
         }
@@ -122,6 +128,9 @@ public class Node{
      * @return the weight
      */
     public int getWeight(){
+		if(weight == -1){
+			weight = left.getWeight() + right.getWeight();
+		}
         return weight;
     }
 
@@ -131,7 +140,15 @@ public class Node{
     public int getLeafNodes(){
         return leafNodes;
     }
-
+	
+	/**
+	 * Set the updateWeight
+	 * @param w the new updateWeight
+	 */
+	public void setUpdateWeight(int w){
+		this.weight = w;
+	}
+	
     /**
      * @return the difference
      */
