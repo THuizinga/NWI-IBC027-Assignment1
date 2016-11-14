@@ -17,10 +17,12 @@ public class Node{
     private int leafNodes;	    // number of leafnodes in this tree
     private int differenceLeft;	    // weight to be added to left tree
     private int differenceRight;    // weight to be added to right tree
+	private boolean isLeafNode;
 
     public Node(String input){		
         if("R".equals(input) || "B".equals(input)){
             value = input;      // we have reached a leaf node of the tree
+			isLeafNode = true;
         }
         else{
             int split = inputSplitter(input.substring(1, input.length()-1));
@@ -29,16 +31,31 @@ public class Node{
         }
     }
 
-        public Boolean isBalanced(){
-	return false;
+	/**
+	 * Checks recursively if the tree is already balanced or not
+	 * @return true iff the tree is already balanced.
+	 */
+	public Boolean isBalanced(){
+		if(Math.abs(left.getWeight() -  right.getWeight()) > 1){
+			return false;
+		}
+		else if(isLeafNode){
+			return true;
+		}		
+		else{
+			return (left.isBalanced() && right.isBalanced());
+		}
     }
     
+	
+	
+
     public int solve(){
         // TODO
         return 0;
     }
 
-/**
+	/**
      * Calculate the value of the index where the input string should be splitted  
      * in to the left and the right string by counting the brackets.
      * @return the index of the last character of the left string
