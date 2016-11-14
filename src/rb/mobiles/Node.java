@@ -11,6 +11,10 @@ public class Node {
 	public Node left;
 	public Node right;
 	public String value;
+        public int weight;
+        public int leafNodes;
+        
+        
 	
 	public Node(String input) {		
 		if(input == "B" || input == "R")
