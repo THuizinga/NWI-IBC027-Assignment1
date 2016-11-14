@@ -8,11 +8,13 @@ package rb.mobiles;
 
 public class Node {
 
-    private Node left;
-    private Node right;
-    private String value;
-    private int weight;
-    private int leafNodes;
+    private Node left;		    // left node of this tree
+    private Node right;		    // right node of this tree 
+    private String value;	    // 'R' if Red leaf. 'B' If right leaf
+    private int weight;		    // total weight of this tree
+    private int leafNodes;	    // number of leafnodes in this tree
+    private int differenceLeft;	    // weight to be added to left tree
+    private int differenceRight;    // weight to be added to right tree
 
     public Node(String input){		
         if("B".equals(input) || "R".equals(input))
@@ -25,7 +27,7 @@ public class Node {
     }
 
     public int solve(){
-        // TODO Auto-generated method stub
+        // TODO
         return 0;
     }
 
@@ -54,6 +56,57 @@ public class Node {
             }
         }
         return result--;
+    }
+    
+    
+
+    /**
+     * @return the left
+     */
+    public Node getLeft() {
+	return left;
+    }
+
+    /**
+     * @return the right
+     */
+    public Node getRight() {
+	return right;
+    }
+
+    /**
+     * @return the value
+     */
+    public String getValue() {
+	return value;
+    }
+
+    /**
+     * @return the weight
+     */
+    public int getWeight() {
+	return weight;
+    }
+
+    /**
+     * @return the leafNodes
+     */
+    public int getLeafNodes() {
+	return leafNodes;
+    }
+
+    /**
+     * @return the differenceLeft
+     */
+    public int getDifferenceLeft() {
+	return differenceLeft;
+    }
+
+    /**
+     * @return the differenceRight
+     */
+    public int getDifferenceRight() {
+	return differenceRight;
     }
 
 }
