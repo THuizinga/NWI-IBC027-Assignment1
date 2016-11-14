@@ -6,7 +6,7 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
-public class Node {
+public class Node{
 
     public Node left;
     public Node right;
@@ -30,7 +30,7 @@ public class Node {
     }
 
     /**
-    * Calculate the value where the input string should be splitted  
+    * Calculate the value of the index where the input string should be splitted  
     * in to the left and the right string by counting the brackets.
     * @return the index of the last character of the left string
     */
@@ -41,19 +41,20 @@ public class Node {
         while(brackets > 0 || result == 0){
             char cur = s.charAt(result);
 
-            if(cur == '('){
-                brackets ++;
-                result ++;
-            }
-            else if(cur == ')'){
-                brackets --;
-                result ++;
-            }
-            else{
-                result ++;
+            switch(cur){
+                case '(':
+                    brackets ++;
+                    result ++;
+                    break;
+                case ')':
+                    brackets --;
+                    result ++;
+                    break;
+                default:
+                    result ++;
+                    break;
             }
         }
         return result--;
     }
-
 }
