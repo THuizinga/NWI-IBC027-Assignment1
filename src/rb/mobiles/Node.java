@@ -6,6 +6,8 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
+// Testing out what works with regard to this new branch
+
 public class Node {
 
 	public Node left;
@@ -21,7 +23,7 @@ public class Node {
 				value = input;
 		else{
 			int split = inputSplitter(input);
-			left = new Node(input.substring(1, split));
+			left = new Node(input.substring(0, split));
 			right = new Node(input.substring(split+1, input.length()-1));
 		}
 		
