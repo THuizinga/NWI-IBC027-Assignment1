@@ -1,6 +1,5 @@
 package rb.mobiles;
 
-// Test master branch functionality after manual merge
 /**
  *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
