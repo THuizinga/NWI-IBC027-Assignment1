@@ -12,8 +12,8 @@ public class RBMobiles{
     * @param args the command line arguments
     */
     public static void main(String[] args){
-        String input = "(BR)";
+        String input = "((BB)(RR))";
         Node n = new Node(input);
-        System.out.println(n.solve());
+        //System.out.println(n.solve());
     }
 }

@@ -20,7 +20,7 @@ public class Node{
         }
         else{
             int split = inputSplitter(input.substring(1, input.length()-1));
-            left = new Node(input.substring(1, split));                     // string for building left child's tree
+            left = new Node(input.substring(1, split+1));                     // string for building left child's tree
             right = new Node(input.substring(split+1, input.length()-1));   // string for building right child's tree
         }
     }
