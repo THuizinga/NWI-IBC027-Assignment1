@@ -15,9 +15,8 @@ public class Node{
     private String value;	    // 'R' if Red leaf. 'B' If right leaf
     private int weight;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
-    private int differenceLeft;	    // weight to be added to left tree
-    private int differenceRight;    // weight to be added to right tree
-	private boolean isLeafNode;
+    private int updateWeight;	// weight to be added to this tree
+    private boolean isLeafNode;
 
     public Node(String input){		
         if("R".equals(input) || "B".equals(input)){
@@ -26,8 +25,8 @@ public class Node{
         }
         else{
             int split = inputSplitter(input.substring(1, input.length()-1));
-            left = new Node(input.substring(1, split+1));                     // string for building left child's tree
-            right = new Node(input.substring(split+1, input.length()-1));   // string for building right child's tree
+            left = new Node(input.substring(1, split+1));						// string for building left child's tree
+            right = new Node(input.substring(split+1, input.length()-1));		// string for building right child's tree
         }
     }
 
@@ -95,49 +94,44 @@ public class Node{
      * @return the left
      */
     public Node getLeft() {
-	return left;
+		return left;
     }
 
     /**
      * @return the right
      */
     public Node getRight() {
-	return right;
+		return right;
     }
 
     /**
      * @return the value
      */
     public String getValue() {
-	return value;
+		return value;
     }
 
     /**
      * @return the weight
      */
     public int getWeight() {
-	return weight;
+		return weight;
     }
 
     /**
      * @return the leafNodes
      */
     public int getLeafNodes() {
-	return leafNodes;
+		return leafNodes;
     }
 
     /**
-     * @return the differenceLeft
+     * @return the difference
      */
-    public int getDifferenceLeft() {
-	return differenceLeft;
+    public int getUpdateWeight() {
+		return updateWeight;
     }
 
-    /**
-     * @return the differenceRight
-     */
-    public int getDifferenceRight() {
-	return differenceRight;
-    }
+    
 
 }
