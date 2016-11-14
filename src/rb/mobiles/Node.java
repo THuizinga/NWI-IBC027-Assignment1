@@ -10,22 +10,22 @@ public class Node{
 
     public Node left;
     public Node right;
-    public String value;
+    public String value;    // value appended to a leaf node ['R' || 'B']
     public int weight;
     public int leafNodes;
 
     public Node(String input){		
-        if(input == "B" || input == "R")
-            value = input;
+        if("R".equals(input) || "B".equals(input))
+            value = input;      // we have reached a leaf node of the tree
         else{
             int split = inputSplitter(input);
-            left = new Node(input.substring(0, split));
-            right = new Node(input.substring(split+1, input.length()-1));
+            left = new Node(input.substring(1, split));                     // string for building left child's tree
+            right = new Node(input.substring(split+1, input.length()-1));   // string for building right child's tree
         }
     }
 
     public int solve(){
-        // TODO Auto-generated method stub
+        // TODO
         return 0;
     }
 
@@ -35,26 +35,26 @@ public class Node{
     * @return the index of the last character of the left string
     */
     private int inputSplitter(String s){
-        int result = 0;
+        int index = 0;
         int brackets = 0;
 
-        while(brackets > 0 || result == 0){
-            char cur = s.charAt(result);
+        while(brackets > 0 || index == 0){
+            char cur = s.charAt(index);
 
             switch(cur){
                 case '(':
                     brackets ++;
-                    result ++;
+                    index ++;
                     break;
                 case ')':
                     brackets --;
-                    result ++;
+                    index ++;
                     break;
                 default:
-                    result ++;
+                    index ++;
                     break;
             }
         }
-        return result--;
+        return index--;
     }
 }
