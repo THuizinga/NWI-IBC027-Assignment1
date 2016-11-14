@@ -15,8 +15,9 @@ public class Node{
     public int leafNodes;
 
     public Node(String input){		
-        if("R".equals(input) || "B".equals(input))
+        if("R".equals(input) || "B".equals(input)){
             value = input;      // we have reached a leaf node of the tree
+        }
         else{
             int split = inputSplitter(input.substring(1, input.length()-1));
             left = new Node(input.substring(1, split));                     // string for building left child's tree
