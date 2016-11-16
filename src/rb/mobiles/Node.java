@@ -19,6 +19,7 @@ public class Node{
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight = 0;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
+    private int desiredWeight = 0;
 
     public Node(String input){
         if("R".equals(input) || "B".equals(input)){
@@ -71,48 +72,74 @@ public class Node{
      *
      * @return the amount of swaps; -1 if balancing is not possible
      */
-    public int solve(){
-        //If this is a leaf node, we count a step, and thus return 1 in the 
-        //recursive function when a red child changes to a black child.
+    public int calcSwaps(){
         if(isLeafNode){
             if(updateWeight == -1){
+                System.out.println("TEST CASE 1");
+                return 1;
+            }
+            else{
+                System.out.println("TEST CASE 2");
+                return 0;
+            }
+        }
+        else if(weight % 2 == 0){    // weight is even
+            left.setUpdateWeight((weight / 2) - left.getWeight());
+            right.setUpdateWeight((weight / 2) - right.getWeight());
+
+            System.out.println("TEST CASE 3");
+            return left.calcSwaps() + right.calcSwaps();
+        }
+        else{                   // weight is odd
+            left.setUpdateWeight((weight / 2) - left.getWeight() + 1);
+            right.setUpdateWeight((weight / 2) - right.getWeight());
+            int sumLeft = left.calcSwaps() + right.calcSwaps();
+
+            left.setUpdateWeight((weight / 2) - left.getWeight());
+            right.setUpdateWeight((weight / 2 - right.getWeight() + 1));
+            int sumRight = left.calcSwaps() + right.calcSwaps();
+
+            System.out.println("TEST CASE 4");
+            return Math.min(sumLeft, sumRight);
+        }
+    }
+    
+    /**
+     * calc function using desiredWeight instead of updateWeight
+     * @return 
+     */
+    public int calcSwaps1(){
+        // CASE 1
+        if(isLeafNode){
+            if(getWeight() == 1 && desiredWeight == 0){
                 return 1;
             }
             else{
                 return 0;
             }
-
-        }
-        //If this is not a leaf node, the direct childs are balanced
-        //and all the ancestors are balanced, the total amount of changes 
-        //is the ammount of changes the subtrees have to make.
-        //TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
-        else if(isBalanced() && updateWeight == 0){
-            return left.solve() + right.solve();
         }
 
-        //This is not a leaf, and not balanced.
-        else if((weight & 1) == 0){
-            left.updateUpdateWeight(left.getWeight() - weight / 2);
-            right.updateUpdateWeight(right.getWeight() - weight / 2);
-            return left.solve() + right.solve();
+        // CASE 2
+        else if (getWeight() % 2 == 0){
+            left.setDesiredWeight(weight/2);
+            right.setDesiredWeight(weight/2);
+
+            return left.calcSwaps1() + right.calcSwaps1();
         }
 
+        // CASE 3
         else{
-            int tempLeftUpdateWeight = left.getUpdateWeight();
-            int tempRightUpdateWeight = right.getUpdateWeight();
-            left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
-            right.updateUpdateWeight(right.getWeight() - weight / 2);
+            int leftHigh;
+            int rightHigh;
 
-            left.setUpdateWeight(tempLeftUpdateWeight);
-            right.setUpdateWeight(tempRightUpdateWeight);
+            left.setDesiredWeight(weight/2);
+            right.setDesiredWeight((weight/2) + 1);
+            leftHigh = left.calcSwaps1() + right.calcSwaps1();
 
-            int leftHigh = left.solve() + right.solve();
+            left.setDesiredWeight((weight/2) + 1);
+            right.setDesiredWeight(weight/2);
+            rightHigh = left.calcSwaps1() + right.calcSwaps1();
 
-            left.updateUpdateWeight(left.getWeight() - weight / 2);
-            right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
-
-            int rightHigh = left.solve() + right.solve();
             return Math.min(leftHigh, rightHigh);
         }
     }
@@ -217,5 +244,13 @@ public class Node{
      */
     public Boolean getIsLeafNode(){
         return isLeafNode;
+    }
+    
+    public int getDesiredWeight(){
+        return desiredWeight;
+    }
+    
+    public void setDesiredWeight(int w){
+        this.desiredWeight = w;
     }
 }
