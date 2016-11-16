@@ -14,7 +14,7 @@ public class Node{
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight = 0;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
-    private int desiredWeight = 0;
+    private int desiredWeight = 0;  // the weight you want the tree to have
 
     public Node(String input){
         if("R".equals(input) || "B".equals(input)){
