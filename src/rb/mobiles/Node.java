@@ -71,52 +71,6 @@ public class Node{
      *
      * @return the amount of swaps; -1 if balancing is not possible
      */
-    public int solve(){
-        //If this is a leaf node, we count a step, and thus return 1 in the 
-        //recursive function when a red child changes to a black child.
-        if(isLeafNode){
-            if(updateWeight == -1){
-                return 1;
-            }
-            else{
-                return 0;
-            }
-
-        }
-        //If this is not a leaf node, the direct childs are balanced
-        //and all the ancestors are balanced, the total amount of changes 
-        //is the ammount of changes the subtrees have to make.
-        //TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
-        else if(isBalanced() && updateWeight == 0){
-            return left.solve() + right.solve();
-        }
-
-        //This is not a leaf, and not balanced.
-        else if((weight & 1) == 0){
-            left.updateUpdateWeight(left.getWeight() - weight / 2);
-            right.updateUpdateWeight(right.getWeight() - weight / 2);
-            return left.solve() + right.solve();
-        }
-
-        else{
-            int tempLeftUpdateWeight = left.getUpdateWeight();
-            int tempRightUpdateWeight = right.getUpdateWeight();
-            left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
-            right.updateUpdateWeight(right.getWeight() - weight / 2);
-
-            left.setUpdateWeight(tempLeftUpdateWeight);
-            right.setUpdateWeight(tempRightUpdateWeight);
-
-            int leftHigh = left.solve() + right.solve();
-
-            left.updateUpdateWeight(left.getWeight() - weight / 2);
-            right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
-
-            int rightHigh = left.solve() + right.solve();
-            return Math.min(leftHigh, rightHigh);
-        }
-    }
-
     public int calcSwaps(){
         if(isLeafNode){
             if(updateWeight == -1){
