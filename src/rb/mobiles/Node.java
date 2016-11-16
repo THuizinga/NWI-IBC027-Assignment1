@@ -74,36 +74,35 @@ public class Node{
     public int calcSwaps(){
         if(isLeafNode){
             if(updateWeight == -1){
+                System.out.println("TEST CASE 1");
                 return 1;
             }
             else{
+                System.out.println("TEST CASE 2");
                 return 0;
             }
         }
-        else{
-            if(weight % 2 == 0){    // weight is even
-                left.setUpdateWeight((weight/2) - left.getWeight());
-                right.setUpdateWeight((weight/2) - right.getWeight());
+        else if(weight % 2 == 0){    // weight is even
+            left.setUpdateWeight((weight / 2) - left.getWeight());
+            right.setUpdateWeight((weight / 2) - right.getWeight());
 
-                return left.calcSwaps() + right.calcSwaps();
-            }
-            else{                   // weight is odd
-                int orgWeightLeft = left.getWeight();
-                int orgWeightRight = right.getWeight();
+            System.out.println("TEST CASE 3");
+            return left.calcSwaps() + right.calcSwaps();
+        }
+        else{                   // weight is odd
+            left.setUpdateWeight((weight / 2) - left.getWeight() + 1);
+            right.setUpdateWeight((weight / 2) - right.getWeight());
+            int sumLeft = left.calcSwaps() + right.calcSwaps();
 
-                left.setUpdateWeight((weight/2) - left.getWeight() + 1);
-                right.setUpdateWeight((weight/2) - right.getWeight());
-                int sumLeft = left.calcSwaps() + right.calcSwaps();
+            left.setUpdateWeight((weight / 2) - left.getWeight());
+            right.setUpdateWeight((weight / 2 - right.getWeight() + 1));
+            int sumRight = left.calcSwaps() + right.calcSwaps();
 
-                left.setUpdateWeight((weight/2) - left.getWeight());
-                right.setUpdateWeight((weight/2 - right.getWeight() + 1));
-                int sumRight = left.calcSwaps() + right.calcSwaps();
-
-                return Math.min(sumLeft, sumRight);
-            }
+            System.out.println("TEST CASE 4");
+            return Math.min(sumLeft, sumRight);
         }
     }
-    
+
     /**
      * Calculate the value of the index where the input string should be
      * splitted in to the left and the right string by counting the brackets.
