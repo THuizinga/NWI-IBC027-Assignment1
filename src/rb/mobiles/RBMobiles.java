@@ -17,17 +17,14 @@ public class RBMobiles{
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
 
-        System.out.println(input);
+        Node n = new Node(input);
+        int answer = n.solve();
 
-//        String input = "((BB)(RR))";
-//        Node n = new Node(input);
-//        
-//        int answer = n.solve();
-//        if(answer < 0){
-//            System.out.println("discard");
-//        }
-//        else{
-//            System.out.println(answer);
-//        }
+        if(answer < 0){
+            System.out.println("discard");
+        }
+        else{
+            System.out.println(answer);
+        }
     }
 }
