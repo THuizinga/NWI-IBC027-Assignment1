@@ -14,9 +14,7 @@ public class Node{
 
     private Node left;		    // left node of this tree
     private Node right;		    // right node of this tree 
-    private String value;	    // 'R' if Red leaf. 'B' if black leaf
     private int weight = -1;		    // total weight of this tree
-    private int leafNodes;	    // number of leafnodes in this tree
     private int desiredWeight = -1;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
 
@@ -28,7 +26,6 @@ public class Node{
             else{
                 weight = 0;
             }
-            value = input;      // we have reached a leaf node of the tree
             isLeafNode = true;
         }
         else{
@@ -38,102 +35,12 @@ public class Node{
         }
     }
 
-    /**
-     * Checks recursively if the tree is already balanced or not
-     *
-     * @return true iff the tree is already balanced.
-     */
-    public Boolean isFullyBalanced(){
-        if(Math.abs(left.getWeight() - right.getWeight()) > 1){
-            return false;
-        }
-        else if(isLeafNode){
-            return true;
-        }
-        else{
-            return (left.isFullyBalanced() && right.isFullyBalanced());
-        }
-    }
-
-    /**
-     * Checks if the weight of the left and the right child have at most
-     * a difference of one.
-     *
-     * @return false iff the left weight differs more than 1 from the
-     * right weight
-     */
-    public Boolean isBalanced(){
-        return Math.abs(left.getWeight() - right.getWeight()) <= 1;
-    }
-
-    /**
-     * Calculates the minimal amount of swaps necessary for balancing the tree.
-     *
-     * @return the amount of swaps; -1 if balancing is not possible
-     */
-    
-    /*
-    public int solve(){
-        //If this is a leaf node, we count a step, and thus return 1 in the 
-        //recursive function when a red child changes to a black child.
-        if(isLeafNode){
-            if(updateWeight == -1){
-                return 1;
-            }
-            else{
-                return 0;
-            }
-
-        }
-        //If this is not a leaf node, the direct childs are balanced
-        //and all the ancestors are balanced, the total amount of changes 
-        //is the ammount of changes the subtrees have to make.
-        //TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
-        else if(isBalanced() && updateWeight == 0){
-            return left.solve() + right.solve();
-        }
-
-        //This is not a leaf, and not balanced.
-        else{
-
-            if ((weight & 1) == 0){     //Weight is even
-                left.updateUpdateWeight(left.getWeight() - weight / 2);
-                right.updateUpdateWeight(right.getWeight() - weight / 2);
-                return left.solve() + right.solve();
-            }
-
-            else{
-                int tempLeftUpdateWeight = left.getUpdateWeight();
-                int tempRightUpdateWeight = right.getUpdateWeight();
-                left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
-                right.updateUpdateWeight(right.getWeight() - weight / 2);
-
-                left.setUpdateWeight(tempLeftUpdateWeight);
-                right.setUpdateWeight(tempRightUpdateWeight);
-
-                int leftHigh = left.solve() + right.solve();
-
-                left.updateUpdateWeight(left.getWeight() - weight / 2);
-                right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
-
-                int rightHigh = left.solve() + right.solve();
-                return Math.min(leftHigh, rightHigh);
-            }
-        }
-    }
-    */
-
     public int calc1(){
         if(desiredWeight == -1){
             desiredWeight = weight;
         }
         getWeight();
-        setLeafNodes();
         if(isLeafNode){
-//            System.out.println("Dit is een kind");
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
             if(weight == 1 && desiredWeight == 0){
                 return 1;
             }
@@ -143,21 +50,12 @@ public class Node{
         }
         
         else if((desiredWeight & 1) == 0){
-//            System.out.println("Dit is een even node met zoveel kinderen: " + leafNodes);
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
             left.setDesiredWeight(desiredWeight/2);
             right.setDesiredWeight(desiredWeight/2);
             return left.calc1() + right.calc1();
         }
         
         else{
-//            System.out.println("Dit is een oneven node met zoveel kinderen: " + leafNodes);
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
-
             int leftHigh;
             int rightHigh;
             
@@ -179,12 +77,7 @@ public class Node{
             desiredWeight = weight;
         }
         getWeight();
-        setLeafNodes();
         if(isLeafNode){
-//            System.out.println("Dit is een kind");
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
             if(weight == 0 && desiredWeight == 1){
                 return 1;
             }
@@ -194,20 +87,12 @@ public class Node{
         }
         
         else if((desiredWeight & 1) == 0){
-//            System.out.println("Dit is een even node met zoveel kinderen: " + leafNodes);
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
             left.setDesiredWeight(desiredWeight/2);
             right.setDesiredWeight(desiredWeight/2);
             return left.calc2() + right.calc2();
         }
         
         else{
-//            System.out.println("Dit is een oneven node met zoveel kinderen: " + leafNodes);
-//            System.out.println("Gewicht is: " + weight);
-//            System.out.println("Gewenst gewicht is: " + desiredWeight);
-//            System.out.println("");
 
             int leftHigh;
             int rightHigh;
@@ -262,26 +147,6 @@ public class Node{
         return index;
     }
 
-    /**
-     * @return the left node
-     */
-    public Node getLeft(){
-        return left;
-    }
-
-    /**
-     * @return the right node
-     */
-    public Node getRight(){
-        return right;
-    }
-
-    /**
-     * @return the value of the node
-     */
-    public String getValue(){
-        return value;
-    }
 
     /**
      * @return the weight of the node
@@ -293,38 +158,16 @@ public class Node{
         return weight;
     }
 
-    /**
-     * @return the number of leafNodes in the tree
-     */
-    public int getLeafNodes(){
-        return leafNodes;
-    }
-    
-    public int setLeafNodes(){
-        if(isLeafNode)
-            return 1;
-        else{
-            leafNodes = left.setLeafNodes() + right.setLeafNodes();
-            return leafNodes;
-        }
-    }
-
     public void setDesiredWeight(int w){
         this.desiredWeight = w;
     }
 
     /**
-     * @return the weight to be added to this tree
+     * @return the desiredWeight to be added to this tree
      */
     public int getDesiredWeight(){
         return desiredWeight;
     }
 
-    /**
-     * @return true iff the node
-     * is a leafnode in the tree
-     */
-    public Boolean getIsLeafNode(){
-        return isLeafNode;
-    }
+
 }
