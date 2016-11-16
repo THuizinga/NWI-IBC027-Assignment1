@@ -5,16 +5,18 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
+/*
+ * TODO
+ * 1. In the constructor initialise the Node variables (except updateWeight)
+ * 2. Add recursive solve() function
+ */
 public class Node{
 
-    private Node left;		    // left node of this tree
-    private Node right;		    // right node of this tree 
-    private String value;	    // 'R' if Red leaf. 'B' if black leaf
+    private Node left;                      // left node of this tree
+    private Node right;                     // right node of this tree 
     private int weight = -1;		    // total weight of this tree
-    private int leafNodes;	    // number of leafnodes in this tree
-    private int updateWeight = 0;       // weight to be added to this tree
-    private boolean isLeafNode;     // shows whether the node is a leaf node
-    private int desiredWeight = 0;  // the weight you want the tree to have
+    private int desiredWeight = -1;         // weight to be added to this tree
+    private boolean isLeafNode;             // shows whether the node is a leaf node
 
     public Node(String input){
         if("R".equals(input) || "B".equals(input)){
@@ -24,81 +26,93 @@ public class Node{
             else{
                 weight = 0;
             }
-            value = input;      // we have reached a leaf node of the tree
             isLeafNode = true;
         }
         else{
             int split = inputSplitter(input.substring(1, input.length() - 1));
-            left = new Node(input.substring(1, split + 1));                       // string for building left child's tree
+            left = new Node(input.substring(1, split + 1));                         // string for building left child's tree
             right = new Node(input.substring(split + 1, input.length() - 1));       // string for building right child's tree
         }
     }
 
     /**
-     * Checks recursively if the tree is already balanced or not
+     * This function calculates the minimum number of swaps needed to make the
+     * tree balanced. It works recursively, just like the tree itself. The swaps
+     * are counted by counting the number of red nodes changing in to black
+     * nodes. The total number of nodes stay the same because all the desired
+     * weights are based on the total weight of the tree at the start. So if n
+     * nodes change from red to black, also n nodes will change from black to
+     * red.
      *
-     * @return true iff the tree is already balanced.
+     * @return The minimum number of swaps needed to make the tree balanced.
+     * -1 if not possible.
      */
-    public Boolean isFullyBalanced(){
-        if(Math.abs(left.getWeight() - right.getWeight()) > 1){
-            return false;
+    public int calcMinimumSwaps(){
+        if(desiredWeight == -1){
+            desiredWeight = weight;
         }
-        else if(isLeafNode){
-            return true;
-        }
-        else{
-            return (left.isFullyBalanced() && right.isFullyBalanced());
-        }
-    }
-
-    /**
-     * Checks if the weight of the left and the right child have at most
-     * a difference of one.
-     *
-     * @return false iff the left weight differs more than 1 from the
-     * right weight
-     */
-    public Boolean isBalanced(){
-        return Math.abs(left.getWeight() - right.getWeight()) <= 1;
-    }
-    
-    /**
-     * calc function using desiredWeight instead of updateWeight
-     * @return 
-     */
-    public int calcSwaps(){
-        // CASE 1
+        getWeight();
+        //Base-case: if this is a leaf node, return 1 if a red node is swapped
+        // to a black node. Return -1 if a leaf node has to be heavyer than 1
+        // or lighter than 0. Return 0 if it stays the same or black -> red.
         if(isLeafNode){
-            if(getWeight() == 1 && desiredWeight == 0){
+            if(weight == 1 && desiredWeight == 0){
                 return 1;
+            }
+            else if(desiredWeight > 1 || desiredWeight < 0){
+                return -1;
             }
             else{
                 return 0;
             }
         }
-
-        // CASE 2
-        else if (getWeight() % 2 == 0){
-            left.setDesiredWeight(weight/2);
-            right.setDesiredWeight(weight/2);
-
-            return left.calcSwaps() + right.calcSwaps();
+        //If it is not a leaf, it has to have a left and a right node. If the 
+        // weight of this node is even, the desired weight of the left node 
+        // and the desired weight of the right node will be the desired weight
+        // of this node devided by two.
+        else if((desiredWeight & 1) == 0){
+            left.setDesiredWeight(desiredWeight / 2);
+            right.setDesiredWeight(desiredWeight / 2);
+            return conditionalSum(left.calcMinimumSwaps(), right.calcMinimumSwaps());
         }
 
-        // CASE 3
+        //If the desired weight of this node is odd, it cannot be easily divided
+        // by 2. One of the desired weights will be bigger than the other.
+        // To make sure we get the best possible answer, we will split it both 
+        // ways and choose the smallest outcome of the two answers to go with.
         else{
             int leftHigh;
             int rightHigh;
 
-            left.setDesiredWeight(weight/2);
-            right.setDesiredWeight((weight/2) + 1);
-            leftHigh = left.calcSwaps() + right.calcSwaps();
+            left.setDesiredWeight((desiredWeight / 2) + 1);
+            right.setDesiredWeight((desiredWeight / 2));
+            leftHigh = conditionalSum(left.calcMinimumSwaps(), right.calcMinimumSwaps());
 
-            left.setDesiredWeight((weight/2) + 1);
-            right.setDesiredWeight(weight/2);
-            rightHigh = left.calcSwaps() + right.calcSwaps();
+            left.setDesiredWeight((desiredWeight / 2));
+            right.setDesiredWeight((desiredWeight / 2) + 1);
+            rightHigh = conditionalSum(left.calcMinimumSwaps(), right.calcMinimumSwaps());
 
-            return Math.min(leftHigh, rightHigh);
+            return conditionalMin(leftHigh, rightHigh);
+        }
+
+    }
+
+    /**
+     * This will add two integers as long as their value is not -1. It will
+     * return -1 otherwise.
+     *
+     * @param a
+     * @param b
+     *
+     * @return a+b if both integers are not -1.
+     * @return -1 otherwise.
+     */
+    private int conditionalSum(int a, int b){
+        if(a == -1 || b == -1){
+            return -1;
+        }
+        else{
+            return a + b;
         }
     }
 
@@ -139,27 +153,6 @@ public class Node{
     }
 
     /**
-     * @return the left node
-     */
-    public Node getLeft(){
-        return left;
-    }
-
-    /**
-     * @return the right node
-     */
-    public Node getRight(){
-        return right;
-    }
-
-    /**
-     * @return the value of the node
-     */
-    public String getValue(){
-        return value;
-    }
-
-    /**
      * @return the weight of the node
      */
     public int getWeight(){
@@ -169,46 +162,37 @@ public class Node{
         return weight;
     }
 
-    /**
-     * @return the number of leafNodes in the tree
-     */
-    public int getLeafNodes(){
-        return leafNodes;
+    public void setDesiredWeight(int w){
+        this.desiredWeight = w;
     }
 
     /**
-     * update the updateWeight
-     *
-     * @param w the integer added to updateWeight
+     * @return the desiredWeight to be added to this tree
      */
-    public void updateUpdateWeight(int w){
-        this.updateWeight += w;
-    }
-
-    public void setUpdateWeight(int w){
-        this.updateWeight = w;
-    }
-
-    /**
-     * @return the weight to be added to this tree
-     */
-    public int getUpdateWeight(){
-        return updateWeight;
-    }
-
-    /**
-     * @return true iff the node
-     * is a leafnode in the tree
-     */
-    public Boolean getIsLeafNode(){
-        return isLeafNode;
-    }
-    
     public int getDesiredWeight(){
         return desiredWeight;
     }
-    
-    public void setDesiredWeight(int w){
-        this.desiredWeight = w;
+
+    /**
+     * Calculates the minimum value of two integers that are not -1.
+     * If one of them is -1, it returns the other one.
+     *
+     * @param a first integer to be minimized
+     * @param b second integer to be minimized
+     *
+     * @return smallest value of a and b, if they are both not -1.
+     * @return b if a is -1
+     * @return a if b is -1
+     */
+    private int conditionalMin(int a, int b){
+        if(a == -1){
+            return b;
+        }
+        else if(b == -1){
+            return a;
+        }
+        else{
+            return Math.min(a, b);
+        }
     }
 }
