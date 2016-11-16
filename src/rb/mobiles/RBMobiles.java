@@ -9,6 +9,11 @@ import java.util.Scanner;
 public class RBMobiles{
 
     /**
+     * The main function will get the string from standard input, create a new
+     * node, pass it to the node and orders it to calculate the minimum number
+     * of swaps needed to balance the tree. If this is possible, it will output
+     * this number. If it is not possible, it will output 'discard'.
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args){
@@ -16,9 +21,10 @@ public class RBMobiles{
         String input = sc.nextLine();
 
         Node n = new Node(input);
-
-        if(true){       // Some condition...
-            System.out.println(n.calcSwaps());
+        n.getWeight();
+        int answer = n.calcMinimumSwaps();
+        if(answer != -1){
+            System.out.println(answer);
         }
         else{
             System.out.println("discard");
