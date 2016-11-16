@@ -134,7 +134,18 @@ public class Node{
                 return left.calcSwaps() + right.calcSwaps();
             }
             else{                   // weight is odd
-                
+                int orgWeightLeft = left.getWeight();
+                int orgWeightRight = right.getWeight();
+
+                left.setUpdateWeight((weight/2) - left.getWeight() + 1);
+                right.setUpdateWeight((weight/2) - right.getWeight());
+                int sumLeft = left.calcSwaps() + right.calcSwaps();
+
+                left.setUpdateWeight((weight/2) - left.getWeight());
+                right.setUpdateWeight((weight/2 - right.getWeight() + 1));
+                int sumRight = left.calcSwaps() + right.calcSwaps();
+
+                return Math.min(sumLeft, sumRight);
             }
         }
     }
