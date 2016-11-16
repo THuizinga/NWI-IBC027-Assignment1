@@ -18,7 +18,7 @@ public class RBMobiles{
         Node n = new Node(input);
 
         if(true){       // Some condition...
-            System.out.println(n.solve());
+            System.out.println(n.solve1());
         }
         else{
             System.out.println("discard");
