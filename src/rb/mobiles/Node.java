@@ -173,7 +173,6 @@ public class Node{
         }
         
     }
-
     
     public int calc2(){
         if(desiredWeight == -1){
