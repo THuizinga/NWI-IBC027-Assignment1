@@ -98,47 +98,52 @@ public class Node{
     
 
     /**
-     * @return the left
+     * @return the left node
      */
     public Node getLeft(){
         return left;
     }
 
     /**
-     * @return the right
+     * @return the right node
      */
     public Node getRight(){
         return right;
     }
 
     /**
-     * @return the value
+     * @return the value of the node
      */
     public String getValue(){
         return value;
     }
 
     /**
-     * @return the weight
+     * @return the weight of the node
      */
     public int getWeight(){
         return weight;
     }
 
     /**
-     * @return the leafNodes
+     * @return the number of leafNodes in the tree
      */
     public int getLeafNodes(){
         return leafNodes;
     }
 
     /**
-     * @return the difference
+     * @return the weight to be added to this tree
      */
     public int getUpdateWeight(){
         return updateWeight;
     }
     
+    /**
+     * 
+     * @return true iff the node 
+     *  is a leafnode in the tree
+     */
     public Boolean getIsLeafNode(){
         return isLeafNode;
     }
