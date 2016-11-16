@@ -19,6 +19,9 @@ public class RBMobiles{
         
         n.getWeight();
         int answer = n.calc1();
+//        System.out.println(answer);
+        int answer2 = n.calc2();
+//        System.out.println("calc2: " + answer2);
         if(answer == n.calc2())
             System.out.println(answer);
         
