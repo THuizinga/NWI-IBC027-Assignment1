@@ -15,8 +15,7 @@ public class RBMobiles{
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
 
-        Node n;
-        n = new Node(input);
+        Node n = new Node(input);
 
         if(true){       // Some condition...
 //            System.out.println(n.calcSwaps());
