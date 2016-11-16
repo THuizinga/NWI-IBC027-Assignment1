@@ -19,6 +19,7 @@ public class Node{
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight = 0;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
+    private int desiredWeight = 0;
 
     public Node(String input){
         if("R".equals(input) || "B".equals(input)){
@@ -101,6 +102,16 @@ public class Node{
             System.out.println("TEST CASE 4");
             return Math.min(sumLeft, sumRight);
         }
+    }
+    
+    /**
+     * calc function using desiredWeight instead of updateWeight
+     * @return 
+     */
+    public int calc1(){
+        // TODO
+
+        return 0;
     }
 
     /**
@@ -203,5 +214,13 @@ public class Node{
      */
     public Boolean getIsLeafNode(){
         return isLeafNode;
+    }
+    
+    public int getDesiredWeight(){
+        return desiredWeight;
+    }
+    
+    public void setDesiredWeight(int w){
+        this.desiredWeight = w;
     }
 }
