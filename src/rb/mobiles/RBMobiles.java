@@ -1,5 +1,7 @@
 package rb.mobiles;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
@@ -12,15 +14,20 @@ public class RBMobiles{
     * @param args the command line arguments
     */
     public static void main(String[] args){
-        String input = "((BB)(RR))";
-        Node n = new Node(input);
-        
-        int answer = n.solve();
-        if(answer < 0){
-            System.out.println("discard");
-        }
-        else{
-            System.out.println(answer);
-        }
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+
+        System.out.println(input);
+
+//        String input = "((BB)(RR))";
+//        Node n = new Node(input);
+//        
+//        int answer = n.solve();
+//        if(answer < 0){
+//            System.out.println("discard");
+//        }
+//        else{
+//            System.out.println(answer);
+//        }
     }
 }
