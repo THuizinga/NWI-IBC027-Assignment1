@@ -5,17 +5,22 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
+/*
+    * TODO
+    * 1. In the constructor initialise the Node variables (except updateWeight)
+    * 2. Add recursive solve() function
+ */
 public class Node{
 
     private Node left;		    // left node of this tree
     private Node right;		    // right node of this tree 
     private String value;	    // 'R' if Red leaf. 'B' if black leaf
-    private int weight;		    // total weight of this tree
+    private int weight = -1;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
-    private int updateWeight = 0;   // weight to be added to this tree
+    private int updateWeight = 0;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
 
-    public Node(String input){		
+    public Node(String input){
         if("R".equals(input) || "B".equals(input)){
             if("R".equals(input)){
                 weight = 1;
@@ -27,14 +32,15 @@ public class Node{
             isLeafNode = true;
         }
         else{
-            int split = inputSplitter(input.substring(1, input.length()-1));
-            left = new Node(input.substring(1, split+1));                       // string for building left child's tree
-            right = new Node(input.substring(split+1, input.length()-1));       // string for building right child's tree
+            int split = inputSplitter(input.substring(1, input.length() - 1));
+            left = new Node(input.substring(1, split + 1));                       // string for building left child's tree
+            right = new Node(input.substring(split + 1, input.length() - 1));       // string for building right child's tree
         }
     }
 
     /**
      * Checks recursively if the tree is already balanced or not
+     *
      * @return true iff the tree is already balanced.
      */
     public Boolean isFullyBalanced(){
@@ -43,35 +49,31 @@ public class Node{
         }
         else if(isLeafNode){
             return true;
-        }		
+        }
         else{
             return (left.isFullyBalanced() && right.isFullyBalanced());
         }
     }
 
     /**
-     * Checks if the weight of the left and the right child have at most 
+     * Checks if the weight of the left and the right child have at most
      * a difference of one.
+     *
      * @return false iff the left weight differs more than 1 from the
      * right weight
      */
     public Boolean isBalanced(){
-        if(Math.abs(left.getWeight() - right.getWeight()) > 1){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return Math.abs(left.getWeight() - right.getWeight()) <= 1;
     }
-
 
     /**
      * Calculates the minimal amount of swaps necessary for balancing the tree.
+     *
      * @return the amount of swaps; -1 if balancing is not possible
      */
     public int solve(){
-        // If this is a leaf node, we count a step, and thus return 1 in the 
-        // recursive function when a red child changes to a black child.
+        //If this is a leaf node, we count a step, and thus return 1 in the 
+        //recursive function when a red child changes to a black child.
         if(isLeafNode){
             if(updateWeight == -1){
                 return 1;
@@ -79,26 +81,49 @@ public class Node{
             else{
                 return 0;
             }
+
         }
-        // If this is not a leaf node, the direct childs are balanced
-        // and all the ancestors are balanced, the total amount of changes 
-        // is the ammount of changes the subtrees have to make.
-        // TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
+        //If this is not a leaf node, the direct childs are balanced
+        //and all the ancestors are balanced, the total amount of changes 
+        //is the ammount of changes the subtrees have to make.
+        //TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
         else if(isBalanced() && updateWeight == 0){
             return left.solve() + right.solve();
         }
 
-        // Het moeilijkste gedeelte :D
+        //This is not a leaf, and not balanced.
         else{
-            Boolean even = true;
-            left.updateUpdateWeight(left.getWeight());  // Incorrect
-            return left.solve() + right.solve();
+
+            if ((weight & 1) == 0){
+                left.updateUpdateWeight(left.getWeight() - weight / 2);
+                right.updateUpdateWeight(right.getWeight() - weight / 2);
+                return left.solve() + right.solve();
+            }
+
+            else{
+                int tempLeftUpdateWeight = left.getUpdateWeight();
+                int tempRightUpdateWeight = right.getUpdateWeight();
+                left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
+                right.updateUpdateWeight(right.getWeight() - weight / 2);
+
+                left.setUpdateWeight(tempLeftUpdateWeight);
+                right.setUpdateWeight(tempRightUpdateWeight);
+
+                int leftHigh = left.solve() + right.solve();
+
+                left.updateUpdateWeight(left.getWeight() - weight / 2);
+                right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
+
+                int rightHigh = left.solve() + right.solve();
+                return Math.min(leftHigh, rightHigh);
+            }
         }
     }
 
     /**
-     * Calculate the value of the index where the input string should be splitted  
-     * in to the left and the right string by counting the brackets.
+     * Calculate the value of the index where the input string should be
+     * splitted in to the left and the right string by counting the brackets.
+     *
      * @return the index of the last character of the left string
      */
     private int inputSplitter(String s){
@@ -111,54 +136,49 @@ public class Node{
         }
 
         // CASE (XX)(XX)
-        while(brackets > 0 || index == 0){
+        while (brackets > 0 || index == 0){
             char cur = s.charAt(index);
 
-            switch(cur){
+            switch (cur){
                 case '(':
-                    brackets ++;
-                    index ++;
+                    brackets++;
+                    index++;
                     break;
                 case ')':
-                    brackets --;
-                    index ++;
+                    brackets--;
+                    index++;
                     break;
                 default:
-                    index ++;
+                    index++;
                     break;
             }
         }
         return index;
-    }    
-
+    }
 
     /**
-     * @return left
-     *  the left node
+     * @return the left node
      */
     public Node getLeft(){
         return left;
     }
 
     /**
-     * @return right
-     *  the right node
+     * @return the right node
      */
     public Node getRight(){
         return right;
     }
 
     /**
-     * @return value
-     *  the value of the node
+     * @return the value of the node
      */
     public String getValue(){
         return value;
     }
 
     /**
-     * @return weight
-     *  the weight of the node
+     * @return the weight of the node
      */
     public int getWeight(){
         if(weight == -1){
@@ -168,8 +188,7 @@ public class Node{
     }
 
     /**
-     * @return leafNodes
-     *  the number of leafNodes in the tree
+     * @return the number of leafNodes in the tree
      */
     public int getLeafNodes(){
         return leafNodes;
@@ -177,23 +196,27 @@ public class Node{
 
     /**
      * update the updateWeight
+     *
      * @param w the integer added to updateWeight
      */
     public void updateUpdateWeight(int w){
         this.updateWeight += w;
     }
 
+    public void setUpdateWeight(int w){
+        this.updateWeight = w;
+    }
+
     /**
-     * @return updateWeight
-     *  the weight to be added to this tree
+     * @return the weight to be added to this tree
      */
     public int getUpdateWeight(){
         return updateWeight;
     }
 
     /**
-     * @return true iff the node 
-     *  is a leafnode in the tree
+     * @return true iff the node
+     * is a leafnode in the tree
      */
     public Boolean getIsLeafNode(){
         return isLeafNode;
