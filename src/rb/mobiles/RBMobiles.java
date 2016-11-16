@@ -18,8 +18,8 @@ public class RBMobiles{
         Node n = new Node(input);
         n.getWeight();
         int answer1 = n.calc1();
-        int answer2 = n.calc2();
-        if(answer1 == answer2)
+//        int answer2 = n.calc2();
+        if(answer1 != -1)
             System.out.println(answer1);
         
         else{

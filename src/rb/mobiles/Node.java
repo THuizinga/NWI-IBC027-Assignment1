@@ -44,6 +44,9 @@ public class Node{
             if(weight == 1 && desiredWeight == 0){
                 return 1;
             }
+            else if (desiredWeight > 1 || desiredWeight < 0){
+                return -1;
+            }
             else{
                 return 0;
             }
@@ -52,7 +55,7 @@ public class Node{
         else if((desiredWeight & 1) == 0){
             left.setDesiredWeight(desiredWeight/2);
             right.setDesiredWeight(desiredWeight/2);
-            return left.calc1() + right.calc1();
+            return conditionalSum(left.calc1(), right.calc1());
         }
         
         else{
@@ -61,13 +64,13 @@ public class Node{
             
             left.setDesiredWeight((desiredWeight/2) + 1);
             right.setDesiredWeight((desiredWeight/2));
-            leftHigh = left.calc1() + right.calc1();
+            leftHigh = conditionalSum(left.calc1(), right.calc1());
             
             left.setDesiredWeight((desiredWeight/2));
             right.setDesiredWeight((desiredWeight/2) + 1);
-            rightHigh = left.calc1() + right.calc1();
+            rightHigh = conditionalSum(left.calc1(), right.calc1());
             
-            return Math.min(leftHigh, rightHigh);
+            return conditionalMin(leftHigh, rightHigh);
         }
         
     }
@@ -81,6 +84,9 @@ public class Node{
             if(weight == 0 && desiredWeight == 1){
                 return 1;
             }
+            else if (desiredWeight > 1 || desiredWeight < 0){
+                return -1;
+            }
             else{
                 return 0;
             }
@@ -89,7 +95,7 @@ public class Node{
         else if((desiredWeight & 1) == 0){
             left.setDesiredWeight(desiredWeight/2);
             right.setDesiredWeight(desiredWeight/2);
-            return left.calc2() + right.calc2();
+            return conditionalSum(left.calc2(), right.calc2());
         }
         
         else{
@@ -99,17 +105,26 @@ public class Node{
             
             left.setDesiredWeight((desiredWeight/2) + 1);
             right.setDesiredWeight((desiredWeight/2));
-            leftHigh = left.calc2() + right.calc2();
+            leftHigh = conditionalSum(left.calc2(), right.calc2());
             
             left.setDesiredWeight((desiredWeight/2));
             right.setDesiredWeight((desiredWeight/2) + 1);
-            rightHigh = left.calc2() + right.calc2();
+            rightHigh = conditionalSum(left.calc2(), right.calc2());
             
-            return Math.min(leftHigh, rightHigh);
+            return conditionalMin(leftHigh, rightHigh);
         }
         
     }
 
+    private int conditionalSum(int a, int b){
+        if(a == -1 || b == -1){
+            return -1;
+        }
+        else{
+            return a+b;
+        }
+    }
+    
     
     /**
      * Calculate the value of the index where the input string should be
@@ -167,6 +182,18 @@ public class Node{
      */
     public int getDesiredWeight(){
         return desiredWeight;
+    }
+
+    private int conditionalMin(int leftHigh, int rightHigh){
+        if(leftHigh == -1){
+            return rightHigh;
+        }
+        else if(rightHigh == -1){
+            return leftHigh;
+        }
+        else{
+            return Math.min(leftHigh, rightHigh);
+        }
     }
 
 
