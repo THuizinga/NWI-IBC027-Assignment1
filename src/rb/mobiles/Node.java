@@ -108,10 +108,40 @@ public class Node{
      * calc function using desiredWeight instead of updateWeight
      * @return 
      */
-    public int calc1(){
-        // TODO
+    public int calcSwaps1(){
+        // CASE 1
+        if(isLeafNode){
+            if(weight == 1 && desiredWeight == 0){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
 
-        return 0;
+        // CASE 2
+        else if (weight % 2 == 0){
+            left.setDesiredWeight(weight/2);
+            right.setDesiredWeight(weight/2);
+
+            return left.calcSwaps1() + right.calcSwaps1();
+        }
+
+        // CASE 3
+        else{
+            int leftHigh;
+            int rightHigh;
+
+            left.setDesiredWeight(weight/2);
+            right.setDesiredWeight((weight/2) + 1);
+            leftHigh = left.calcSwaps1() + right.calcSwaps1();
+
+            left.setDesiredWeight((weight/2) + 1);
+            right.setDesiredWeight(weight/2);
+            rightHigh = left.calcSwaps1() + right.calcSwaps1();
+
+            return Math.min(leftHigh, rightHigh);
+        }
     }
 
     /**
