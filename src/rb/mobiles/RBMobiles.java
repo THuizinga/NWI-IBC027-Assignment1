@@ -22,11 +22,10 @@ public class RBMobiles{
 
         Node n = new Node(input);
         n.getWeight();
-        int answer1 = n.calcMinimumSwaps();
-        if(answer1 != -1){
-            System.out.println(answer1);
+        int answer = n.calcMinimumSwaps();
+        if(answer != -1){
+            System.out.println(answer);
         }
-
         else{
             System.out.println("discard");
         }

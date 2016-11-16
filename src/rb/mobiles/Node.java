@@ -12,11 +12,11 @@ package rb.mobiles;
  */
 public class Node{
 
-    private Node left;		    // left node of this tree
-    private Node right;		    // right node of this tree 
+    private Node left;                      // left node of this tree
+    private Node right;                     // right node of this tree 
     private int weight = -1;		    // total weight of this tree
-    private int desiredWeight = -1;       // weight to be added to this tree
-    private boolean isLeafNode;     // shows whether the node is a leaf node
+    private int desiredWeight = -1;         // weight to be added to this tree
+    private boolean isLeafNode;             // shows whether the node is a leaf node
 
     public Node(String input){
         if("R".equals(input) || "B".equals(input)){
@@ -30,7 +30,7 @@ public class Node{
         }
         else{
             int split = inputSplitter(input.substring(1, input.length() - 1));
-            left = new Node(input.substring(1, split + 1));                       // string for building left child's tree
+            left = new Node(input.substring(1, split + 1));                         // string for building left child's tree
             right = new Node(input.substring(split + 1, input.length() - 1));       // string for building right child's tree
         }
     }
@@ -105,7 +105,6 @@ public class Node{
      * @param b
      *
      * @return a+b if both integers are not -1.
-     *
      * @return -1 otherwise.
      */
     private int conditionalSum(int a, int b){
@@ -182,9 +181,7 @@ public class Node{
      * @param b second integer to be minimized
      *
      * @return smallest value of a and b, if they are both not -1.
-     *
      * @return b if a is -1
-     *
      * @return a if b is -1
      */
     private int conditionalMin(int a, int b){
@@ -198,5 +195,4 @@ public class Node{
             return Math.min(a, b);
         }
     }
-
 }
