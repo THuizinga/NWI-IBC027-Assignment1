@@ -117,6 +117,11 @@ public class Node{
         }
     }
 
+    public int solve1(){
+        
+        return 0;
+    }
+    
     /**
      * Calculate the value of the index where the input string should be
      * splitted in to the left and the right string by counting the brackets.
