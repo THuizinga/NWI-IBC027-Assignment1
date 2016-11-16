@@ -16,8 +16,8 @@ public class Node{
 
     private Node left;		    // left node of this tree
     private Node right;		    // right node of this tree 
-    private String value;	    // 'R' if Red leaf. 'B' If right leaf
-    private int weight = -1;	// total weight of this tree
+    private String value;	    // 'R' if Red leaf. 'B' if black leaf
+    private int weight;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight = 0;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
@@ -142,28 +142,28 @@ public class Node{
     
 
     /**
-     * @return the left
+     * @return the left node
      */
     public Node getLeft(){
         return left;
     }
 
     /**
-     * @return the right
+     * @return the right node
      */
     public Node getRight(){
         return right;
     }
 
     /**
-     * @return the value
+     * @return the value of the node
      */
     public String getValue(){
         return value;
     }
 
     /**
-     * @return the weight
+     * @return the weight of the node
      */
     public int getWeight(){
 		if(weight == -1){
@@ -173,7 +173,7 @@ public class Node{
     }
 
     /**
-     * @return the leafNodes
+     * @return the number of leafNodes in the tree
      */
     public int getLeafNodes(){
         return leafNodes;
@@ -188,9 +188,17 @@ public class Node{
 	}
 	
     /**
-     * @return the difference
+     * @return the weight to be added to this tree
      */
     public int getUpdateWeight(){
         return updateWeight;
+    }
+    
+    /**
+     * @return true iff the node 
+     *  is a leafnode in the tree
+     */
+    public Boolean getIsLeafNode(){
+        return isLeafNode;
     }
 }
