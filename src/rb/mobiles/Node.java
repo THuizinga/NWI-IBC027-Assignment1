@@ -1,15 +1,8 @@
 package rb.mobiles;
 
 /**
- *
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
- */
-
-/**
- * TODO
- * 1. In the constructor initialise the Node variables (except updateWeight)
- * 2. Add recursive solve() function
  */
 
 public class Node{
@@ -19,11 +12,17 @@ public class Node{
     private String value;	    // 'R' if Red leaf. 'B' if black leaf
     private int weight;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
-    private int updateWeight;       // weight to be added to this tree
+    private int updateWeight = 0;   // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
 
     public Node(String input){		
         if("R".equals(input) || "B".equals(input)){
+            if("R".equals(input)){
+                weight = 1;
+            }
+            else{
+                weight = 0;
+            }
             value = input;      // we have reached a leaf node of the tree
             isLeafNode = true;
         }
@@ -38,27 +37,63 @@ public class Node{
      * Checks recursively if the tree is already balanced or not
      * @return true iff the tree is already balanced.
      */
-    public Boolean isBalanced(){
-        if(Math.abs(left.getWeight() -  right.getWeight()) > 1){
+    public Boolean isFullyBalanced(){
+        if(Math.abs(left.getWeight() - right.getWeight()) > 1){
             return false;
         }
         else if(isLeafNode){
             return true;
         }		
         else{
-            return (left.isBalanced() && right.isBalanced());
+            return (left.isFullyBalanced() && right.isFullyBalanced());
         }
     }
-    
-	
-	
+
+    /**
+     * Checks if the weight of the left and the right child have at most 
+     * a difference of one.
+     * @return false iff the left weight differs more than 1 from the
+     * right weight
+     */
+    public Boolean isBalanced(){
+        if(Math.abs(left.getWeight() - right.getWeight()) > 1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+
     /**
      * Calculates the minimal amount of swaps necessary for balancing the tree.
-     * @return the amount of swaps, -1 if balancing is not possible
+     * @return the amount of swaps; -1 if balancing is not possible
      */
     public int solve(){
-        // TODO
-        return 0;
+        // If this is a leaf node, we count a step, and thus return 1 in the 
+        // recursive function when a red child changes to a black child.
+        if(isLeafNode){
+            if(updateWeight == -1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        // If this is not a leaf node, the direct childs are balanced
+        // and all the ancestors are balanced, the total amount of changes 
+        // is the ammount of changes the subtrees have to make.
+        // TODO Misschien ondanks dat dit gedeelte gebalanced is, dat we bij een oneven gewicht, toch andersom ook moeten proberen?
+        else if(isBalanced() && updateWeight == 0){
+            return left.solve() + right.solve();
+        }
+
+        // Het moeilijkste gedeelte :D
+        else{
+            Boolean even = true;
+            left.updateUpdateWeight(left.getWeight());  // Incorrect
+            return left.solve() + right.solve();
+        }
     }
 
     /**
@@ -69,7 +104,7 @@ public class Node{
     private int inputSplitter(String s){
         int index = 0;
         int brackets = 0;
-	
+
         // CASE (XX)
         if(s.charAt(0) == 'B' || s.charAt(0) == 'R'){
             return 1;
@@ -95,7 +130,7 @@ public class Node{
         }
         return index;
     }    
-    
+
 
     /**
      * @return left
@@ -126,6 +161,9 @@ public class Node{
      *  the weight of the node
      */
     public int getWeight(){
+        if(weight == -1){
+            weight = left.getWeight() + right.getWeight();
+        }
         return weight;
     }
 
@@ -138,15 +176,24 @@ public class Node{
     }
 
     /**
+     * update the updateWeight
+     * @param w the integer added to updateWeight
+     */
+    public void updateUpdateWeight(int w){
+        this.updateWeight += w;
+    }
+
+    /**
      * @return updateWeight
      *  the weight to be added to this tree
      */
     public int getUpdateWeight(){
         return updateWeight;
     }
-    
+
     /**
-     * @return isLeafNode
+     * @return true iff the node 
+     *  is a leafnode in the tree
      */
     public Boolean getIsLeafNode(){
         return isLeafNode;
