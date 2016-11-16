@@ -18,8 +18,7 @@ public class RBMobiles{
         Node n = new Node(input);
 
         if(true){       // Some condition...
-//            System.out.println(n.calcSwaps());
-            System.out.println(n.calcSwaps1());
+            System.out.println(n.calcSwaps());
         }
         else{
             System.out.println("discard");
