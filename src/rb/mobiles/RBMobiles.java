@@ -16,11 +16,12 @@ public class RBMobiles{
         String input = sc.nextLine();
 
         Node n = new Node(input);
-
-        if(true){       // Some condition...
-            n.getWeight();
-            System.out.println(n.calc1());
-        }
+        
+        n.getWeight();
+        int answer = n.calc1();
+        if(answer == n.calc2())
+            System.out.println(answer);
+        
         else{
             System.out.println("discard");
         }

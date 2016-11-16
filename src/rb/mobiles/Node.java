@@ -173,7 +173,59 @@ public class Node{
         }
         
     }
+
     
+    public int calc2(){
+        if(desiredWeight == -1){
+            desiredWeight = weight;
+        }
+        getWeight();
+        setLeafNodes();
+        if(isLeafNode){
+//            System.out.println("Dit is een kind");
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+            if(weight == 0 && desiredWeight == 1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        
+        else if((desiredWeight & 1) == 0){
+//            System.out.println("Dit is een even node met zoveel kinderen: " + leafNodes);
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+            left.setDesiredWeight(desiredWeight/2);
+            right.setDesiredWeight(desiredWeight/2);
+            return left.calc2() + right.calc2();
+        }
+        
+        else{
+//            System.out.println("Dit is een oneven node met zoveel kinderen: " + leafNodes);
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+
+            int leftHigh;
+            int rightHigh;
+            
+            left.setDesiredWeight((desiredWeight/2) + 1);
+            right.setDesiredWeight((desiredWeight/2));
+            leftHigh = left.calc2() + right.calc2();
+            
+            left.setDesiredWeight((desiredWeight/2));
+            right.setDesiredWeight((desiredWeight/2) + 1);
+            rightHigh = left.calc2() + right.calc2();
+            
+            return Math.min(leftHigh, rightHigh);
+        }
+        
+    }
+
     
     /**
      * Calculate the value of the index where the input string should be
