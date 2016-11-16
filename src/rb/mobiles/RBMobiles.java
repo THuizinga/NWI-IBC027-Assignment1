@@ -3,6 +3,7 @@ package rb.mobiles;
 import java.util.Scanner;
 
 /**
+ * jhaasdijk branch
  * @author Tiko Huizinga - s4460898 - <t.huizinga@student.ru.nl>
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
