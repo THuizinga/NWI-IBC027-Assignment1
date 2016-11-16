@@ -111,7 +111,7 @@ public class Node{
     public int calcSwaps1(){
         // CASE 1
         if(isLeafNode){
-            if(weight == 1 && desiredWeight == 0){
+            if(getWeight() == 1 && desiredWeight == 0){
                 return 1;
             }
             else{
@@ -120,7 +120,7 @@ public class Node{
         }
 
         // CASE 2
-        else if (weight % 2 == 0){
+        else if (getWeight() % 2 == 0){
             left.setDesiredWeight(weight/2);
             right.setDesiredWeight(weight/2);
 
