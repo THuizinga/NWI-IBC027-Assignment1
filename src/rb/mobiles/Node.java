@@ -117,9 +117,26 @@ public class Node{
         }
     }
 
-    public int solve1(){
-        
-        return 0;
+    public int calcSwaps(){
+        if(isLeafNode){
+            if(updateWeight == -1){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        else{
+            if(weight % 2 == 0){    // weight is even
+                left.setUpdateWeight(weight/2);
+                right.setUpdateWeight(weight/2);
+
+                return left.calcSwaps() + right.calcSwaps();
+            }
+            else{                   // weight is odd
+                return 1;
+            }
+        }
     }
     
     /**
