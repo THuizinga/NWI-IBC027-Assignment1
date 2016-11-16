@@ -128,13 +128,13 @@ public class Node{
         }
         else{
             if(weight % 2 == 0){    // weight is even
-                left.setUpdateWeight(weight/2);
-                right.setUpdateWeight(weight/2);
+                left.setUpdateWeight((weight/2) - left.getWeight());
+                right.setUpdateWeight((weight/2) - right.getWeight());
 
                 return left.calcSwaps() + right.calcSwaps();
             }
             else{                   // weight is odd
-                return 1;
+                
             }
         }
     }
