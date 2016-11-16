@@ -17,7 +17,7 @@ public class Node{
     private String value;	    // 'R' if Red leaf. 'B' if black leaf
     private int weight = -1;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
-    private int updateWeight = 0;       // weight to be added to this tree
+    private int desiredWeight = -1;       // weight to be added to this tree
     private boolean isLeafNode;     // shows whether the node is a leaf node
 
     public Node(String input){
@@ -71,6 +71,8 @@ public class Node{
      *
      * @return the amount of swaps; -1 if balancing is not possible
      */
+    
+    /*
     public int solve(){
         //If this is a leaf node, we count a step, and thus return 1 in the 
         //recursive function when a red child changes to a black child.
@@ -94,7 +96,7 @@ public class Node{
         //This is not a leaf, and not balanced.
         else{
 
-            if ((weight & 1) == 0){
+            if ((weight & 1) == 0){     //Weight is even
                 left.updateUpdateWeight(left.getWeight() - weight / 2);
                 right.updateUpdateWeight(right.getWeight() - weight / 2);
                 return left.solve() + right.solve();
@@ -119,7 +121,60 @@ public class Node{
             }
         }
     }
+    */
 
+    public int calc1(){
+        if(desiredWeight == -1){
+            desiredWeight = weight;
+        }
+        getWeight();
+        setLeafNodes();
+        if(isLeafNode){
+//            System.out.println("Dit is een kind");
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+            if(weight == 1 && desiredWeight == 0){
+                return 1;
+            }
+            else{
+                return 0;
+            }
+        }
+        
+        else if((desiredWeight & 1) == 0){
+//            System.out.println("Dit is een even node met zoveel kinderen: " + leafNodes);
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+            left.setDesiredWeight(desiredWeight/2);
+            right.setDesiredWeight(desiredWeight/2);
+            return left.calc1() + right.calc1();
+        }
+        
+        else{
+//            System.out.println("Dit is een oneven node met zoveel kinderen: " + leafNodes);
+//            System.out.println("Gewicht is: " + weight);
+//            System.out.println("Gewenst gewicht is: " + desiredWeight);
+//            System.out.println("");
+
+            int leftHigh;
+            int rightHigh;
+            
+            left.setDesiredWeight((desiredWeight/2) + 1);
+            right.setDesiredWeight((desiredWeight/2));
+            leftHigh = left.calc1() + right.calc1();
+            
+            left.setDesiredWeight((desiredWeight/2));
+            right.setDesiredWeight((desiredWeight/2) + 1);
+            rightHigh = left.calc1() + right.calc1();
+            
+            return Math.min(leftHigh, rightHigh);
+        }
+        
+    }
+    
+    
     /**
      * Calculate the value of the index where the input string should be
      * splitted in to the left and the right string by counting the brackets.
@@ -193,25 +248,25 @@ public class Node{
     public int getLeafNodes(){
         return leafNodes;
     }
-
-    /**
-     * update the updateWeight
-     *
-     * @param w the integer added to updateWeight
-     */
-    public void updateUpdateWeight(int w){
-        this.updateWeight += w;
+    
+    public int setLeafNodes(){
+        if(isLeafNode)
+            return 1;
+        else{
+            leafNodes = left.setLeafNodes() + right.setLeafNodes();
+            return leafNodes;
+        }
     }
 
-    public void setUpdateWeight(int w){
-        this.updateWeight = w;
+    public void setDesiredWeight(int w){
+        this.desiredWeight = w;
     }
 
     /**
      * @return the weight to be added to this tree
      */
-    public int getUpdateWeight(){
-        return updateWeight;
+    public int getDesiredWeight(){
+        return desiredWeight;
     }
 
     /**

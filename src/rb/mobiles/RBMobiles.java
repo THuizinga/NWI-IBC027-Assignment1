@@ -18,7 +18,8 @@ public class RBMobiles{
         Node n = new Node(input);
 
         if(true){       // Some condition...
-            System.out.println(n.solve());
+            n.getWeight();
+            System.out.println(n.calc1());
         }
         else{
             System.out.println("discard");
