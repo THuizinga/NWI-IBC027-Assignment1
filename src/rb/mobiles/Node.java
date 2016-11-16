@@ -5,11 +5,6 @@ package rb.mobiles;
  * @author Jasper Haasdijk - s4449754 - <j.haasdijk@student.ru.nl>
  */
 
-/*
-    * TODO
-    * 1. In the constructor initialise the Node variables (except updateWeight)
-    * 2. Add recursive solve() function
- */
 public class Node{
 
     private Node left;		    // left node of this tree
@@ -66,49 +61,12 @@ public class Node{
     public Boolean isBalanced(){
         return Math.abs(left.getWeight() - right.getWeight()) <= 1;
     }
-
-    /**
-     * Calculates the minimal amount of swaps necessary for balancing the tree.
-     *
-     * @return the amount of swaps; -1 if balancing is not possible
-     */
-    public int calcSwaps(){
-        if(isLeafNode){
-            if(updateWeight == -1){
-                System.out.println("TEST CASE 1");
-                return 1;
-            }
-            else{
-                System.out.println("TEST CASE 2");
-                return 0;
-            }
-        }
-        else if(weight % 2 == 0){    // weight is even
-            left.setUpdateWeight((weight / 2) - left.getWeight());
-            right.setUpdateWeight((weight / 2) - right.getWeight());
-
-            System.out.println("TEST CASE 3");
-            return left.calcSwaps() + right.calcSwaps();
-        }
-        else{                   // weight is odd
-            left.setUpdateWeight((weight / 2) - left.getWeight() + 1);
-            right.setUpdateWeight((weight / 2) - right.getWeight());
-            int sumLeft = left.calcSwaps() + right.calcSwaps();
-
-            left.setUpdateWeight((weight / 2) - left.getWeight());
-            right.setUpdateWeight((weight / 2 - right.getWeight() + 1));
-            int sumRight = left.calcSwaps() + right.calcSwaps();
-
-            System.out.println("TEST CASE 4");
-            return Math.min(sumLeft, sumRight);
-        }
-    }
     
     /**
      * calc function using desiredWeight instead of updateWeight
      * @return 
      */
-    public int calcSwaps1(){
+    public int calcSwaps(){
         // CASE 1
         if(isLeafNode){
             if(getWeight() == 1 && desiredWeight == 0){
@@ -124,7 +82,7 @@ public class Node{
             left.setDesiredWeight(weight/2);
             right.setDesiredWeight(weight/2);
 
-            return left.calcSwaps1() + right.calcSwaps1();
+            return left.calcSwaps() + right.calcSwaps();
         }
 
         // CASE 3
@@ -134,11 +92,11 @@ public class Node{
 
             left.setDesiredWeight(weight/2);
             right.setDesiredWeight((weight/2) + 1);
-            leftHigh = left.calcSwaps1() + right.calcSwaps1();
+            leftHigh = left.calcSwaps() + right.calcSwaps();
 
             left.setDesiredWeight((weight/2) + 1);
             right.setDesiredWeight(weight/2);
-            rightHigh = left.calcSwaps1() + right.calcSwaps1();
+            rightHigh = left.calcSwaps() + right.calcSwaps();
 
             return Math.min(leftHigh, rightHigh);
         }
