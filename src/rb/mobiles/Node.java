@@ -16,7 +16,7 @@ public class Node{
 
     private Node left;		    // left node of this tree
     private Node right;		    // right node of this tree 
-    private String value;	    // 'R' if Red leaf. 'B' If right leaf
+    private String value;	    // 'R' if Red leaf. 'B' If black leaf
     private int weight;		    // total weight of this tree
     private int leafNodes;	    // number of leafnodes in this tree
     private int updateWeight;       // weight to be added to this tree
