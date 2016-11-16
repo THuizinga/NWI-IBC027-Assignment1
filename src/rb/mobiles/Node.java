@@ -92,31 +92,28 @@ public class Node{
         }
 
         //This is not a leaf, and not balanced.
+        else if((weight & 1) == 0){
+            left.updateUpdateWeight(left.getWeight() - weight / 2);
+            right.updateUpdateWeight(right.getWeight() - weight / 2);
+            return left.solve() + right.solve();
+        }
+
         else{
+            int tempLeftUpdateWeight = left.getUpdateWeight();
+            int tempRightUpdateWeight = right.getUpdateWeight();
+            left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
+            right.updateUpdateWeight(right.getWeight() - weight / 2);
 
-            if ((weight & 1) == 0){
-                left.updateUpdateWeight(left.getWeight() - weight / 2);
-                right.updateUpdateWeight(right.getWeight() - weight / 2);
-                return left.solve() + right.solve();
-            }
+            left.setUpdateWeight(tempLeftUpdateWeight);
+            right.setUpdateWeight(tempRightUpdateWeight);
 
-            else{
-                int tempLeftUpdateWeight = left.getUpdateWeight();
-                int tempRightUpdateWeight = right.getUpdateWeight();
-                left.updateUpdateWeight((left.getWeight() - weight / 2) + 1);
-                right.updateUpdateWeight(right.getWeight() - weight / 2);
+            int leftHigh = left.solve() + right.solve();
 
-                left.setUpdateWeight(tempLeftUpdateWeight);
-                right.setUpdateWeight(tempRightUpdateWeight);
+            left.updateUpdateWeight(left.getWeight() - weight / 2);
+            right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
 
-                int leftHigh = left.solve() + right.solve();
-
-                left.updateUpdateWeight(left.getWeight() - weight / 2);
-                right.updateUpdateWeight((right.getWeight() - weight / 2) + 1);
-
-                int rightHigh = left.solve() + right.solve();
-                return Math.min(leftHigh, rightHigh);
-            }
+            int rightHigh = left.solve() + right.solve();
+            return Math.min(leftHigh, rightHigh);
         }
     }
 
